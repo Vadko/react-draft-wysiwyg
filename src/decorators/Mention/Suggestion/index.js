@@ -10,7 +10,6 @@ class Suggestion {
   constructor(config) {
     const {
       separator,
-      trigger,
       getSuggestions,
       onChange,
       getEditorState,
@@ -22,7 +21,6 @@ class Suggestion {
     } = config;
     this.config = {
       separator,
-      trigger,
       getSuggestions,
       onChange,
       getEditorState,
@@ -38,7 +36,6 @@ class Suggestion {
     if (this.config.getEditorState()) {
       const {
         separator,
-        trigger,
         getSuggestions,
         getEditorState,
       } = this.config;
@@ -54,23 +51,19 @@ class Suggestion {
             ? text.length
             : selection.get('focusOffset') + 1
         );
-        let index = text.lastIndexOf(separator + trigger);
-        let preText = separator + trigger;
-        if ((index === undefined || index < 0) && text[0] === trigger) {
+        let index = text.lastIndexOf(separator);
+        let preText = separator;
+        if ((index === undefined || index < 0) && text[0]) {
           index = 0;
-          preText = trigger;
         }
         if (index >= 0) {
           const mentionText = text.substr(index + preText.length, text.length);
           const suggestionPresent = getSuggestions().some(suggestion => {
-            if (suggestion.value) {
-              if (this.config.caseSensitive) {
-                return suggestion.value.indexOf(mentionText) >= 0;
-              }
+            if (suggestion.text) {
               return (
-                suggestion.value
+                suggestion.text
                   .toLowerCase()
-                  .indexOf(mentionText && mentionText.toLowerCase()) >= 0
+                  .includes(mentionText && mentionText.toLowerCase())
               );
             }
             return false;
@@ -169,6 +162,7 @@ function getSuggestionComponent() {
         SuggestionHandler.close();
       } else if (event.key === 'Enter') {
         this.addMention();
+        newState.showSuggestions = false;
       }
       this.setState(newState);
     };
@@ -203,34 +197,34 @@ function getSuggestionComponent() {
     filteredSuggestions = [];
 
     filterSuggestions = props => {
-      const mentionText = props.children[0].props.text.substr(1);
+      const mentionText = props.children[0].props.text;
       const suggestions = config.getSuggestions();
       this.filteredSuggestions =
         suggestions &&
         suggestions.filter(suggestion => {
-          if (!mentionText || mentionText.length === 0) {
-            return true;
+          if (mentionText.length >= 3) {
+             return suggestion.text
+                  .toLowerCase()
+                  .includes(mentionText && mentionText.toLowerCase())
           }
-          if (config.caseSensitive) {
-            return suggestion.value.indexOf(mentionText) >= 0;
-          }
-          return (
-            suggestion.value
-              .toLowerCase()
-              .indexOf(mentionText && mentionText.toLowerCase()) >= 0
-          );
+          return false;
         });
     };
 
     addMention = () => {
       const { activeOption } = this.state;
       const editorState = config.getEditorState();
-      const { onChange, separator, trigger } = config;
+      const { onChange, separator } = config;
       const selectedMention = this.filteredSuggestions[activeOption];
       if (selectedMention) {
-        addMention(editorState, onChange, separator, trigger, selectedMention);
+        addMention(editorState, onChange, separator, selectedMention);
       }
     };
+
+    onClick = () => {
+        this.addMention();
+        this.closeSuggestionDropdown()
+    }
 
     render() {
       const { children } = this.props;
@@ -249,7 +243,8 @@ function getSuggestionComponent() {
             <span
               className={classNames(
                 'rdw-suggestion-dropdown',
-                dropdownClassName
+                dropdownClassName,
+                !this.filteredSuggestions.length && "rdw-suggestion-disabled"
               )}
               contentEditable="false"
               suppressContentEditableWarning
@@ -260,7 +255,7 @@ function getSuggestionComponent() {
                 <span
                   key={index}
                   spellCheck={false}
-                  onClick={this.addMention}
+                  onClick={this.onClick}
                   data-index={index}
                   onMouseEnter={this.onOptionMouseEnter}
                   onMouseLeave={this.onOptionMouseLeave}

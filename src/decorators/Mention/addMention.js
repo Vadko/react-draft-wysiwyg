@@ -8,18 +8,17 @@ export default function addMention(
   editorState: EditorState,
   onChange: Function,
   separator: string,
-  trigger: string,
   suggestion: Object,
 ): void {
   const { value, url } = suggestion;
   const entityKey = editorState
     .getCurrentContent()
-    .createEntity('MENTION', 'IMMUTABLE', { text: `${trigger}${value}`, value, url })
+    .createEntity('TEXT', 'IMMUTABLE', { text: value, value, url })
     .getLastCreatedEntityKey();
   const selectedBlock = getSelectedBlock(editorState);
   const selectedBlockText = selectedBlock.getText();
   let focusOffset = editorState.getSelection().focusOffset;
-  const mentionIndex = (selectedBlockText.lastIndexOf(separator + trigger, focusOffset) || 0) + 1;
+  const mentionIndex = (selectedBlockText.lastIndexOf(separator, focusOffset) || 0) + 1;
   let spaceAlreadyPresent = false;
   if (selectedBlockText.length === mentionIndex + 1) {
     focusOffset = selectedBlockText.length;
@@ -35,7 +34,7 @@ export default function addMention(
   let contentState = Modifier.replaceText(
     newEditorState.getCurrentContent(),
     updatedSelection,
-    `${trigger}${value}`,
+    value,
     newEditorState.getCurrentInlineStyle(),
     entityKey,
   );
@@ -44,8 +43,8 @@ export default function addMention(
   if (!spaceAlreadyPresent) {
     // insert a blank space after mention
     updatedSelection = newEditorState.getSelection().merge({
-      anchorOffset: mentionIndex + value.length + trigger.length,
-      focusOffset: mentionIndex + value.length + trigger.length,
+      anchorOffset: mentionIndex + value.length,
+      focusOffset: mentionIndex + value.length,
     });
     newEditorState = EditorState.acceptSelection(newEditorState, updatedSelection);
     contentState = Modifier.insertText(
