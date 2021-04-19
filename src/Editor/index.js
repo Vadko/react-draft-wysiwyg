@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import {
+    MultiHighlightDecorator,
+    WordMatcher,
+    SentenceMatcher,
+    MultiHighlightConfig,
+} from "draft-js-multi-inline-highlight";
 import PropTypes from 'prop-types';
 import {
   Editor,
@@ -35,6 +41,7 @@ import defaultToolbar from '../config/defaultToolbar';
 import localeTranslations from '../i18n';
 import './styles.css';
 import '../../css/Draft.css';
+import MultiDecorator from 'draft-js-multidecorators'
 
 class WysiwygEditor extends Component {
   constructor(props) {
@@ -227,7 +234,7 @@ class WysiwygEditor extends Component {
     if (this.props.hashtag) {
       decorators.push(getHashtagDecorator(this.props.hashtag));
     }
-    return new CompositeDecorator(decorators);
+    return new MultiDecorator([new CompositeDecorator(decorators), this.props.initDecoratorConfig && MultiHighlightDecorator(this.props.initDecoratorConfig)]);
   };
 
   getWrapperRef = () => this.wrapper;
@@ -503,6 +510,7 @@ class WysiwygEditor extends Component {
 }
 
 WysiwygEditor.propTypes = {
+  initDecoratorConfig: PropTypes.object,
   onChange: PropTypes.func,
   onEditorStateChange: PropTypes.func,
   onContentStateChange: PropTypes.func,
