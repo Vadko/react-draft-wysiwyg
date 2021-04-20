@@ -41,7 +41,7 @@ import defaultToolbar from '../config/defaultToolbar';
 import localeTranslations from '../i18n';
 import './styles.css';
 import '../../css/Draft.css';
-import MultiDecorator from 'draft-js-multidecorators'
+import MultiDecorator from '@qnighy/draft-js-multidecorators'
 
 class WysiwygEditor extends Component {
   constructor(props) {
@@ -234,7 +234,7 @@ class WysiwygEditor extends Component {
     if (this.props.hashtag) {
       decorators.push(getHashtagDecorator(this.props.hashtag));
     }
-    return new MultiDecorator([new CompositeDecorator(decorators), this.props.initDecoratorConfig && MultiHighlightDecorator(this.props.initDecoratorConfig)]);
+      return new MultiDecorator([this.props.initDecoratorConfig && MultiHighlightDecorator(this.props.initDecoratorConfig), new CompositeDecorator(decorators)]);
   };
 
   getWrapperRef = () => this.wrapper;

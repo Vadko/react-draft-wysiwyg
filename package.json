@@ -55,9 +55,9 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "@qnighy/draft-js-multidecorators": "https://github.com/qnighy/draft-js-multidecorators.git",
     "classnames": "^2.2.6",
     "draft-js-multi-inline-highlight": "^0.2.1",
-    "draft-js-multidecorators": "^1.0.0",
     "draft-js-simpledecorator": "^1.0.2",
     "draftjs-utils": "^0.10.2",
     "html-to-draftjs": "^1.5.0",
