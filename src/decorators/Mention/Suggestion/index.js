@@ -202,12 +202,9 @@ function getSuggestionComponent() {
       this.filteredSuggestions =
         suggestions &&
         suggestions.filter(suggestion => {
-          if (mentionText.length >= 3) {
-             return suggestion.text
-                  .toLowerCase()
-                  .includes(mentionText && mentionText.toLowerCase())
-          }
-          return false;
+         return suggestion.text
+              .toLowerCase()
+              .includes(mentionText && mentionText.toLowerCase())
         });
     };
 
@@ -216,6 +213,7 @@ function getSuggestionComponent() {
       const editorState = config.getEditorState();
       const { onChange, separator } = config;
       const selectedMention = this.filteredSuggestions[activeOption];
+      this.closeSuggestionDropdown()
       if (selectedMention) {
         addMention(editorState, onChange, separator, selectedMention);
       }
@@ -223,7 +221,6 @@ function getSuggestionComponent() {
 
     onClick = () => {
         this.addMention();
-        this.closeSuggestionDropdown()
     }
 
     render() {

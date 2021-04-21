@@ -56,13 +56,15 @@
   },
   "dependencies": {
     "@qnighy/draft-js-multidecorators": "https://github.com/qnighy/draft-js-multidecorators.git",
+    "add": "^2.0.6",
     "classnames": "^2.2.6",
-    "draft-js-multi-inline-highlight": "^0.2.1",
+    "draft-js-multi-inline-highlight": "https://github.com/Vadko/draft-js-multi-inline-highlight.git",
     "draft-js-simpledecorator": "^1.0.2",
     "draftjs-utils": "^0.10.2",
     "html-to-draftjs": "^1.5.0",
     "linkify-it": "^2.2.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "yarn": "^1.22.10"
   },
   "peerDependencies": {
     "draft-js": "^0.10.x || ^0.11.x",
