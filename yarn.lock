@@ -2868,11 +2868,6 @@ clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
-clsx@^1.0.4:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
-  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
-
 coa@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/coa/-/coa-2.0.2.tgz#43f6c21151b4ef2bf57187db0d73de229e3e7ec3"
@@ -3627,12 +3622,6 @@ dotenv@^6.2.0:
 dotenv@^8.0.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
-
-"draft-js-multi-inline-highlight@https://github.com/Vadko/draft-js-multi-inline-highlight.git":
-  version "0.2.1"
-  resolved "https://github.com/Vadko/draft-js-multi-inline-highlight.git#32466621cdaffc03ab105b1a939545761fd1f685"
-  dependencies:
-    clsx "^1.0.4"
 
 draft-js-simpledecorator@^1.0.2:
   version "1.0.2"

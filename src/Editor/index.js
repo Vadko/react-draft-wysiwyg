@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import {
-    MultiHighlightDecorator,
-    WordMatcher,
-    SentenceMatcher,
-    MultiHighlightConfig,
-} from "draft-js-multi-inline-highlight";
 import PropTypes from 'prop-types';
 import {
   Editor,
@@ -234,7 +228,7 @@ class WysiwygEditor extends Component {
     if (this.props.hashtag) {
       decorators.push(getHashtagDecorator(this.props.hashtag));
     }
-      return new MultiDecorator([this.props.initDecoratorConfig && MultiHighlightDecorator(this.props.initDecoratorConfig), new CompositeDecorator(decorators)]);
+      return new MultiDecorator([...this.props.simpleDecorators, new CompositeDecorator(decorators)]);
   };
 
   getWrapperRef = () => this.wrapper;
@@ -510,7 +504,6 @@ class WysiwygEditor extends Component {
 }
 
 WysiwygEditor.propTypes = {
-  initDecoratorConfig: PropTypes.object,
   onChange: PropTypes.func,
   onEditorStateChange: PropTypes.func,
   onContentStateChange: PropTypes.func,
@@ -554,6 +547,7 @@ WysiwygEditor.propTypes = {
   customBlockRenderFunc: PropTypes.func,
   wrapperId: PropTypes.number,
   customDecorators: PropTypes.array,
+  simpleDecorators: PropTypes.array,
   editorRef: PropTypes.func,
   handlePastedText: PropTypes.func,
 };
@@ -564,6 +558,7 @@ WysiwygEditor.defaultProps = {
   stripPastedStyles: false,
   localization: { locale: 'en', translations: {} },
   customDecorators: [],
+  simpleDecorators: []
 };
 
 export default WysiwygEditor;
