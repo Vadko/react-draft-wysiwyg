@@ -55,6 +55,7 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.0",
     "@qnighy/draft-js-multidecorators": "https://github.com/qnighy/draft-js-multidecorators.git",
     "add": "^2.0.6",
     "classnames": "^2.2.6",
