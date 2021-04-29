@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Editor,
   EditorState,
   RichUtils,
   convertToRaw,
@@ -8,7 +9,6 @@ import {
   CompositeDecorator,
   getDefaultKeyBinding,
 } from 'draft-js';
-import Editor from '@draft-js-plugins/editor';
 import {
   changeDepth,
   handleNewLine,
@@ -483,7 +483,6 @@ class WysiwygEditor extends Component {
           onMouseDown={this.onEditorMouseDown}
         >
           <Editor
-            plugins={this.props.plugins}
             ref={this.setEditorReference}
             keyBindingFn={this.keyBindingFn}
             editorState={editorState}
@@ -549,7 +548,6 @@ WysiwygEditor.propTypes = {
   wrapperId: PropTypes.number,
   customDecorators: PropTypes.array,
   simpleDecorators: PropTypes.array,
-  plugins: PropTypes.array,
   editorRef: PropTypes.func,
   handlePastedText: PropTypes.func,
 };
@@ -560,8 +558,7 @@ WysiwygEditor.defaultProps = {
   stripPastedStyles: false,
   localization: { locale: 'en', translations: {} },
   customDecorators: [],
-  simpleDecorators: [],
-  plugins: []
+  simpleDecorators: []
 };
 
 export default WysiwygEditor;
